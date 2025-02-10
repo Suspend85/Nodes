@@ -4,12 +4,12 @@ sudo apt update -y && sudo apt upgrade -y
 
 # Проверка наличия необходимых утилит, установка если отсутствуют
 if ! command -v figlet &> /dev/null; then
-    echo "figlet не найден. Устанавливаем..."
+    # echo "figlet не найден. Устанавливаем..."
     sudo apt update && sudo apt install -y figlet
 fi
 
 if ! command -v whiptail &> /dev/null; then
-    echo "whiptail не найден. Устанавливаем..."
+    # echo "whiptail не найден. Устанавливаем..."
     sudo apt update && sudo apt install -y whiptail
 fi
 
@@ -18,6 +18,7 @@ YELLOW="\e[33m"
 CYAN="\e[36m"
 BLUE="\e[34m"
 GREEN="\e[32m"
+MAGENTA='\033[1;35m'
 RED="\e[31m"
 PINK="\e[35m"
 NC="\e[0m"
@@ -27,12 +28,13 @@ install_dependencies() {
     sudo apt update && sudo apt install -y curl iptables build-essential git wget lz4 jq make gcc nano automake autoconf tmux htop nvme-cli pkg-config libssl-dev libleveldb-dev tar clang bsdmainutils ncdu unzip screen
 }
 
-# Вывод приветственного текста с помощью figlet
-echo -e "${PINK}$(figlet -w 150 -f standard "Softs by Dkro")${NC}"
+# Вывод логотипа с помощью figlet
+echo -e "${YELLOW}$(figlet -l -k -w 150 -f slant "BlockRockNodes" | while IFS= read -r line; do echo -e "${YELLOW}$line${NC}"; done)${NC}"
 
 echo "============================================="
 echo "Начинаем установку необходимых библиотек"
 echo "============================================="
+
 echo ""
 
 # Определение функции анимации
