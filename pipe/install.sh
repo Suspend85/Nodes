@@ -29,7 +29,7 @@ install_dependencies() {
 # Функция для установки ноды
 install_node() {
     echo "================================================="
-    echo -e "${BLUE}Starting install ${PROJ_NAME} node (Устанавливаем ноду)...${NC}"
+    echo -e "${BLUE}Starting install $PROJ_NAME node (Устанавливаем ноду)...${NC}"
     echo "================================================="
     echo ""
     sleep 1
@@ -133,7 +133,7 @@ update_node() {
 
 # Функция для удаления ноды
 remove_node() {
-    echo -e "${BLUE}Deleting the ${PROJ_NAME} node (Удаляем ноду)...${NC}"
+    echo -e "${BLUE}Deleting the $PROJ_NAME node (Удаляем ноду)...${NC}"
     pkill -f pop
 
     # Завершаем сеанс screen с именем 'pipepop' и удаляем его
@@ -142,7 +142,7 @@ remove_node() {
     # Удаление файлов ноды
     sudo rm -rf ~/pipe
 
-    echo -e "${GREEN}The ${PROJ_NAME} node has been successfully removed! (Нода успешно удалена!).${NC}"
+    echo -e "${GREEN}The $PROJ_NAME node has been successfully removed! (Нода успешно удалена!).${NC}"
 }
 
 # Основное меню
@@ -150,7 +150,7 @@ while true; do
   echo ""
   echo -e "${YELLOW}"
   echo -e "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
-  echo -e "${GREEN} ${PROJ_NAME} - Node Menu (Меню):"
+  echo -e "${GREEN} $PROJ_NAME - Node Menu (Меню):"
   echo -e "${YELLOW}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
   echo -e "${BLUE}"
   echo "1. Install Node (Установить ноду)"
