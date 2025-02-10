@@ -42,6 +42,7 @@ install_node() {
     cd ~/pipe
 
     # Скачиваем файл pop
+    echo -e "${YELLOW}Downloading pop-file (Скачиваем pop-файл)...${NC}"
     wget https://dl.pipecdn.app/v0.2.4/pop
 
     # Делаем файл исполнимым
@@ -77,44 +78,18 @@ install_node() {
 
 # Функция для проверки статуса ноды
 check_status() {
-    echo -e "${BLUE}Checking node status (Проверка статуса ноды)...${NC}"   
-    echo "Текущая директория: $(pwd)"
-    # Переход в папку pipe
-    if сd pipe; then
-        echo "Перешли в директорию pipe."
-        # Проверка наличия файла pop
-        if [ -f "pop" ]; then
-            ./pop --status
-        else
-            echo -e "${RED}Файл pop не найден в директории pipe${NC}"
-        fi
-        
-        # Возврат в предыдущую директорию
-        cd ..
-    else
-        echo -e "${RED}Ошибка перехода в директорию pipe${NC}"
-    fi
+    echo -e "${BLUE}Проверка статуса ноды...${NC}"
+    cd pipe
+    ./pop --status
+    cd ..
 }
 
 # Функция для проверки поинтов ноды ./pop --points-route
 check_points() {
     echo -e "${BLUE}Checking node points (Проверка поинтов ноды)...${NC}"
-    echo "Текущая директория: $(pwd)"
-    # Переход в папку pipe
-    if сd pipe; then
-        echo "Перешли в директорию pipe."
-        # Проверка наличия файла pop
-        if [ -f "pop" ]; then
-            ./pop --points-route
-        else
-            echo -e "${RED}Файл pop не найден в директории pipe${NC}"
-        fi
-        
-        # Возврат в предыдущую директорию
-        cd ..
-    else
-        echo -e "${RED}Ошибка перехода в директорию pipe${NC}"
-    fi
+    cd pipe  
+    ./pop --points
+    cd ..
 }
 
 # Функция для создания реф-кода
