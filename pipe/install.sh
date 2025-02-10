@@ -1,7 +1,4 @@
 #!/bin/bash
-echo "Обновляем систему перед настройкой..."
-sudo apt update -y && sudo apt upgrade -y
-
 # Проверка наличия необходимых утилит, установка если отсутствуют
 if ! command -v figlet &> /dev/null; then
     # echo "figlet не найден. Устанавливаем..."
@@ -25,36 +22,36 @@ NC="\e[0m"
 
 install_dependencies() {
     echo -e "${GREEN}Устанавливаем необходимые пакеты...${NC}"
-    sudo apt update && sudo apt install -y curl iptables build-essential git wget lz4 jq make gcc nano automake autoconf tmux htop nvme-cli pkg-config libssl-dev libleveldb-dev tar clang bsdmainutils ncdu unzip screen
+    sudo apt update && sudo apt install -y iptables make gcc nano automake autoconf nvme-cli libssl-dev libleveldb-dev tar clang bsdmainutils ncdu
 }
 
 # Вывод логотипа с помощью figlet
 echo -e "${YELLOW}$(figlet -l -k -w 150 -f slant "BlockRockNodes" | while IFS= read -r line; do echo -e "${YELLOW}$line${NC}"; done)${NC}"
 
-echo "============================================="
-echo "Начинаем установку необходимых библиотек"
-echo "============================================="
+# echo "========================================"
+# echo "Начинаем установку необходимых библиотек"
+# echo "========================================"
 
 echo ""
 
-# Определение функции анимации
-animate_loading() {
-    for ((i = 1; i <= 5; i++)); do
-        printf "\r${GREEN}Загрузка меню${NC}."
-        sleep 0.3
-        printf "\r${GREEN}Загрузка меню${NC}.."
-        sleep 0.3
-        printf "\r${GREEN}Загрузка меню${NC}..."
-        sleep 0.3
-        printf "\r${GREEN}Загрузка меню${NC}"
-        sleep 0.3
-    done
-    echo ""
-}
+# # Определение функции анимации
+# animate_loading() {
+#     for ((i = 1; i <= 5; i++)); do
+#         printf "\r${GREEN}Загрузка меню${NC}."
+#         sleep 0.3
+#         printf "\r${GREEN}Загрузка меню${NC}.."
+#         sleep 0.3
+#         printf "\r${GREEN}Загрузка меню${NC}..."
+#         sleep 0.3
+#         printf "\r${GREEN}Загрузка меню${NC}"
+#         sleep 0.3
+#     done
+#     echo ""
+# }
 
-# Вызов функции анимации
-animate_loading
-echo ""
+# # Вызов функции анимации
+# animate_loading
+# echo ""
 
 # Функция для установки ноды
 install_node() {
@@ -88,17 +85,15 @@ install_node() {
     read DISK
     
     # Запуск команды с параметрами, с указанием публичного ключа Solana, RAM и max-disk
-    screen -S pipe2 -X stuff "./pop --ram $RAM --max-disk $DISK --cache-dir ~/pipe/download_cache --pubKey $SOLANA_PUB_KEY\n"
-    sleep 3
-    screen -S pipe2 -X stuff "e4313e9d866ee3df\n"
-
+    screen -S pipepop -X stuff "./pop --ram $RAM --max-disk $DISK --cache-dir ~/pipe/download_cache --pubKey $SOLANA_PUB_KEY\n"
+    sleep 2
+    # screen -S pipepop -X stuff "e4313e9d866ee3df\n"
     echo -e "${GREEN}Процесс установки и запуска завершён!${NC}"
 }
 
 # Функция для проверки статуса ноды
 check_status() {
-    echo -e "${BLUE}Проверка статуса ноды...${NC}"
-    
+    echo -e "${BLUE}Проверка статуса ноды...${NC}"   
     cd pipe
     ./pop --status
     cd ..
@@ -107,12 +102,23 @@ check_status() {
 # Функция для проверки поинтов ноды
 check_points() {
     echo -e "${BLUE}Проверка поинтов ноды...${NC}"
-
     cd pipe
-    
-    ./pop --points
-    
+    ./pop --points-route
     cd ..
+}
+
+# Функция для создания реф-кода
+generate_referral() {
+    echo -e "${BLUE}Генерация реферрального кода...${NC}"
+    cd pipe
+    ./pop --gen-referral-route
+    cd ..
+}
+
+# Зарегистрироваться по реф-коду
+signup_by_referral() {
+    echo -e "${BLUE}Регистрация по реферральному коду...${NC}"
+    ./pop --signup-by-referral-route <CODE>
 }
 
 update_node() {
@@ -138,13 +144,13 @@ update_node() {
 
     # Перезагрузка системных служб
     sudo systemctl daemon-reload
-    # Завершаем сессию screen с именем 'pipe2', если она существует
+    # Завершаем сессию screen с именем 'pipepop', если она существует
     if screen -list | grep -q "pipepop"; then
     screen -S pipepop -X quit
     fi
     sleep 2
     
-    # Перезапуск сессии screen с именем 'pipe2' и запуск pop
+    # Перезапуск сессии screen с именем 'pipepop' и запуск pop
     screen -S pipepop -dm ./pop
     
     sleep 5
@@ -156,8 +162,7 @@ update_node() {
 # Функция для удаления ноды
 remove_node() {
     echo -e "${BLUE}Удаляем ноду...${NC}"
-
-     pkill -f pop
+    pkill -f pop
 
     # Завершаем сеанс screen с именем 'pipepop' и удаляем его
     screen -S pipepop -X quit
@@ -170,21 +175,23 @@ remove_node() {
 
 # Основное меню
 CHOICE=$(whiptail --title "Меню действий" \
-    --menu "Выберите действие:" 15 50 6 \
+    --menu "Выберите действие:" 18 50 7 \
     "1" "Установка ноды" \
     "2" "Проверка статуса ноды" \
     "3" "Проверка поинтов ноды" \
-    "4" "Удаление ноды" \
-    "5" "Обновление ноды" \
-    "6" "Выход" \
+    "4" "Создание реф-кода" \
+    "5" "Удаление ноды" \
+    "6" "Обновление ноды" \
+    "7" "Выход" \
     3>&1 1>&2 2>&3)
 
 case $CHOICE in
     1) install_node ;;
     2) check_status ;;
     3) check_points ;;
-    4) remove_node ;;
-    5) update_node ;;
-    6) echo -e "${CYAN}Выход из программы.${NC}" ;;
+    4) generate_referral ;;
+    5) remove_node ;;
+    6) update_node ;;
+    7) echo -e "${CYAN}Выход из программы.${NC}" ;;
     *) echo -e "${RED}Неверный выбор. Завершение программы.${NC}" ;;
 esac
