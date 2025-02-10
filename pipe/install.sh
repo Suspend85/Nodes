@@ -100,6 +100,14 @@ generate_referral() {
     cd ..
 }
 
+# Зарегистрироваться по реф-коду
+signup_by_referral() {
+    echo -e "${BLUE}Регистрация по реферральному коду...${NC}"
+    echo -e "${YELLOW}enter someone's referral code (введите чей-нибудь реферральный код):${NC}"
+    read REF
+    ./pop --signup-by-referral-route $REF
+}
+
 update_node() {
     echo -e "${BLUE}Update version to 0.2.4 (Обновление до версии 0.2.4) ...${NC}"
 
