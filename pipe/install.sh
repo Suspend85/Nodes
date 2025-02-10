@@ -116,12 +116,6 @@ generate_referral() {
     cd ..
 }
 
-# Зарегистрироваться по реф-коду
-# signup_by_referral() {
-#     echo -e "${BLUE}Регистрация по реферральному коду...${NC}"
-#     ./pop --signup-by-referral-route 
-# }
-
 update_node() {
     echo -e "${BLUE}Обновление до версии 0.2.4...${NC}"
 
