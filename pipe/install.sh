@@ -1,12 +1,11 @@
 #!/bin/bash
+
 # Проверка наличия необходимых утилит, установка если отсутствуют
 if ! command -v figlet &> /dev/null; then
-    # echo "figlet не найден. Устанавливаем..."
     sudo apt update && sudo apt install -y figlet
 fi
 
 if ! command -v whiptail &> /dev/null; then
-    # echo "whiptail не найден. Устанавливаем..."
     sudo apt update && sudo apt install -y whiptail
 fi
 
@@ -20,42 +19,22 @@ RED="\e[31m"
 PINK="\e[35m"
 NC="\e[0m"
 
+# Вывод логотипа с помощью figlet
+echo -e "${YELLOW}$(figlet -l -k -w 150 -f slant "BlockRockNodes" | while IFS= read -r line; do echo -e "${YELLOW}$line${NC}"; done)${NC}"
+echo ""
+sleep 3
+
+# функция установки пакетов-зависимостей
 install_dependencies() {
     echo -e "${GREEN}Устанавливаем необходимые пакеты...${NC}"
     sudo apt update && sudo apt install -y iptables make gcc nano automake autoconf nvme-cli libssl-dev libleveldb-dev tar clang bsdmainutils ncdu
 }
 
-# Вывод логотипа с помощью figlet
-echo -e "${YELLOW}$(figlet -l -k -w 150 -f slant "BlockRockNodes" | while IFS= read -r line; do echo -e "${YELLOW}$line${NC}"; done)${NC}"
-
-# echo "========================================"
-# echo "Начинаем установку необходимых библиотек"
-# echo "========================================"
-
-echo ""
-
-# # Определение функции анимации
-# animate_loading() {
-#     for ((i = 1; i <= 5; i++)); do
-#         printf "\r${GREEN}Загрузка меню${NC}."
-#         sleep 0.3
-#         printf "\r${GREEN}Загрузка меню${NC}.."
-#         sleep 0.3
-#         printf "\r${GREEN}Загрузка меню${NC}..."
-#         sleep 0.3
-#         printf "\r${GREEN}Загрузка меню${NC}"
-#         sleep 0.3
-#     done
-#     echo ""
-# }
-
-# # Вызов функции анимации
-# animate_loading
-# echo ""
-
 # Функция для установки ноды
 install_node() {
+    echo "========================================"
     echo -e "${BLUE}Начинаем установку ноды...${NC}"
+    echo "========================================"
     
     # Обновление и установка зависимостей
     source <(wget -O- 'https://raw.githubusercontent.com/Suspend85/Nodes/refs/heads/master/_utils/serv-prepare.sh')
