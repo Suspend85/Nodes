@@ -1,13 +1,14 @@
 #!/bin/bash
 
 # Colors for output
+YELLOW="\e[33m"
 GREEN='\033[1;32m'
 BLUE='\033[1;34m'
 NC='\033[0m' # No Color
 
 # Function to print a separator line
 print_separator() {
-    echo -e "${GREEN}###########################################################################################${NC}"
+    echo -e "${YELLOW}###########################################################################################${NC}"
 }
 
 # Function to print a header message
@@ -45,13 +46,13 @@ sudo apt install -y \
 
 # Install yq using snap
 print_separator
-print_header "Installing yq..."
+# print_header "Installing yq..."
 echo '' && sleep 1
 sudo snap install yq
 
 # Install and configure Fail2Ban
 print_separator
-print_header "Configuring Fail2Ban..."
+# print_header "Configuring Fail2Ban..."
 echo '' && sleep 1
 sudo apt install -y fail2ban
 sudo systemctl enable fail2ban
@@ -59,7 +60,7 @@ sudo systemctl start fail2ban
 
 # Clean up
 print_separator
-print_header "Cleaning up..."
+# print_header "Cleaning up..."
 echo '' && sleep 1
 sudo apt autoremove -y
 sudo apt clean -y
