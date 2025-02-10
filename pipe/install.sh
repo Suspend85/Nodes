@@ -119,7 +119,7 @@ generate_referral() {
 # Зарегистрироваться по реф-коду
 # signup_by_referral() {
 #     echo -e "${BLUE}Регистрация по реферральному коду...${NC}"
-#     ./pop --signup-by-referral-route <CODE>
+#     ./pop --signup-by-referral-route 
 # }
 
 update_node() {
