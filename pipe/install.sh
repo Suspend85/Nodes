@@ -49,22 +49,10 @@ install_node() {
     
     # Проверяем, запущена ли уже сессия screen с именем pipepop
     if screen -ls | grep -q "pipepop"; then
-        echo -e "${YELLOW}Сессия pipepop уже запущена. Подключаемся...${NC}"
-        
-        # Получаем ID первой найденной сессии с именем pipepop
-        session_id=$(screen -ls | grep "pipepop" | head -n 1 | awk '{print $1}')
-        
-        # Подключаемся к сессии
-        echo -e "${GREEN}Подключение к сессии ${session_id}...${NC}"
-        screen -r "$session_id"
+        echo -e "${YELLOW}Сессия pipepop уже запущена. Пропускаем создание новой.${NC}"
     else
-        # Создаем новую сессию screen с именем pipepop
-        echo -e "${GREEN}Создаем новую сессию screen: pipepop${NC}"
-        screen -S "pipepop" -dm ./pop
-        
-        # Подключение к сессии
-        echo -e "${GREEN}Подключение к сессии pipepop...${NC}"
-        screen -r "pipepop"
+        # Создание новой сессии в screen
+        screen -S pipepop -dm
     fi
 
     echo -e "${YELLOW}Enter your public Solana address (Введите свой Solana адрес):${NC}"
