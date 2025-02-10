@@ -72,10 +72,11 @@ install_node() {
 # Функция для проверки статуса ноды
 check_status() {
     echo -e "${BLUE}Checking node status (Проверка статуса ноды)...${NC}"   
-    echo -e "Текущая директория: $(pwd)"
+    echo "Текущая директория: $(pwd)"
     # Проверяем, существует ли директория pipe
-    if [ -d "pipe" ]; then
-        cd pipe
+    if [ -d "./pipe" ]; then
+        echo "Директория ./pipe найдена."
+        cd ./pipe || { echo -e "${RED}Ошибка перехода в ./pipe${NC}"; return 1; }
         if [ -f "pop" ]; then
             ./pop --status
         else
