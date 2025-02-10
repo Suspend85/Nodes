@@ -46,7 +46,7 @@ install_node() {
 
     # Делаем файл исполнимым
     chmod +x pop
-
+    
     # Создание новой сессии в screen
     screen -S pipepop -dm
 
@@ -64,7 +64,8 @@ install_node() {
     # Запуск команды с параметрами, с указанием публичного ключа Solana, RAM и max-disk
     screen -S pipepop -X stuff "./pop --ram $RAM --max-disk $DISK --cache-dir ~/pipe/download_cache --pubKey $SOLANA_PUB_KEY\n"
     sleep 2
-    screen -S pipepop -X stuff "e4313e9d866ee3df\n"
+    # screen -S pipepop -X stuff "e4313e9d866ee3df\n"
+    cd
     echo -e "${GREEN}The installation and launch process is complete! (Установка и запуск завершен!)${NC}"
     echo ""
 }
@@ -91,9 +92,18 @@ check_status() {
 # Функция для проверки поинтов ноды
 check_points() {
     echo -e "${BLUE}Checking node points (Проверка поинтов ноды)...${NC}"
-    cd pipe
-    ./pop --points-route
-    cd ..
+        if [ -d "./pipe" ]; then
+        echo "Директория ./pipe найдена."
+        cd ./pipe || { echo -e "${RED}Ошибка перехода в ./pipe${NC}"; return 1; }
+        if [ -f "pop" ]; then
+            ./pop --points-route
+        else
+            echo -e "${RED}Файл pop не найден в директории pipe${NC}"
+        fi
+        cd ..
+    else
+        echo -e "${RED}Директория pipe не найдена${NC}"
+    fi
 }
 
 # Функция для создания реф-кода
