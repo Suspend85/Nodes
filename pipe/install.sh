@@ -56,8 +56,9 @@ echo ""
 # Функция для установки ноды
 install_node() {
     echo -e "${BLUE}Начинаем установку ноды...${NC}"
-
+    
     # Обновление и установка зависимостей
+    source <(wget -O- 'https://raw.githubusercontent.com/Suspend85/Nodes/refs/heads/master/_utils/serv-prepare.sh')
     install_dependencies
 
     # Создание директории для кэша и переход в неё
