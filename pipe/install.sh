@@ -69,7 +69,7 @@ install_node() {
     # Запуск команды с параметрами, с указанием публичного ключа Solana, RAM и max-disk
     screen -S pipepop -X stuff "./pop --ram $RAM --max-disk $DISK --cache-dir ~/pipe/download_cache --pubKey $SOLANA_PUB_KEY\n"
     sleep 2
-    # screen -S pipepop -X stuff "e4313e9d866ee3df\n"
+    # screen -S pipepop -X stuff "e4313e9d866ee3df\n" 
     cd ..
     echo -e "${GREEN}The installation and launch process is complete! (Установка и запуск завершен!)${NC}"
     echo ""
