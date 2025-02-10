@@ -148,11 +148,11 @@ remove_node() {
 # Основное меню
 while true; do
   echo ""
-  echo -e "${BLUE}"
+  echo -e "${YELLOW}"
   echo -e "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
   echo -e "${GREEN} ${PROJ_NAME} - Node Menu (Меню):"
-  echo -e "${BLUE}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
-  echo "1. Install Node (Установить ноду)"
+  echo -e "${YELLOW}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+  echo "${BLUE}1. Install Node (Установить ноду)"
   echo "2. Check Node logs (Проверить статус ноды)"
   echo "3. Chech Node points (Проверить поинты ноды)"
   echo "4. Generate feferral code (Создать реф. код)"
