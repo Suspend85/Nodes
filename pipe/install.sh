@@ -162,7 +162,7 @@ while true; do
   echo "7. Exit (Выход)"
   echo -e "${YELLOW}"
   read -p "Choose an option (Выберите пункт): " choice
-  echo -e "${NO_COLOR}"
+  echo -e "${NC}"
   
   case $choice in
     1) install_node ;;
