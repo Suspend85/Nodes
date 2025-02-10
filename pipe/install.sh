@@ -29,7 +29,7 @@ install_dependencies() {
 # Функция для установки ноды
 install_node() {
     echo "================================================="
-    echo -e "${BLUE}Starting install $PROJ_NAME node (Устанавливаем ноду)...${NC}"
+    echo -e "${BLUE}Installing $PROJ_NAME node (Установка ноды)...${NC}"
     echo "================================================="
     echo ""
     sleep 1
@@ -47,8 +47,25 @@ install_node() {
     # Делаем файл исполнимым
     chmod +x pop
     
-    # Создание новой сессии в screen
-    screen -S pipepop -dm
+    # Проверяем, запущена ли уже сессия screen с именем pipepop
+    if screen -ls | grep -q "pipepop"; then
+        echo -e "${YELLOW}Сессия pipepop уже запущена. Подключаемся...${NC}"
+        
+        # Получаем ID первой найденной сессии с именем pipepop
+        session_id=$(screen -ls | grep "pipepop" | head -n 1 | awk '{print $1}')
+        
+        # Подключаемся к сессии
+        echo -e "${GREEN}Подключение к сессии ${session_id}...${NC}"
+        screen -r "$session_id"
+    else
+        # Создаем новую сессию screen с именем pipepop
+        echo -e "${GREEN}Создаем новую сессию screen: pipepop${NC}"
+        screen -S "pipepop" -dm ./pop
+        
+        # Подключение к сессии
+        echo -e "${GREEN}Подключение к сессии pipepop...${NC}"
+        screen -r "pipepop"
+    fi
 
     echo -e "${YELLOW}Enter your public Solana address (Введите свой Solana адрес):${NC}"
     read SOLANA_PUB_KEY
@@ -65,7 +82,7 @@ install_node() {
     screen -S pipepop -X stuff "./pop --ram $RAM --max-disk $DISK --cache-dir ~/pipe/download_cache --pubKey $SOLANA_PUB_KEY\n"
     sleep 2
     # screen -S pipepop -X stuff "e4313e9d866ee3df\n"
-    cd
+    cd ..
     echo -e "${GREEN}The installation and launch process is complete! (Установка и запуск завершен!)${NC}"
     echo ""
 }
@@ -74,35 +91,41 @@ install_node() {
 check_status() {
     echo -e "${BLUE}Checking node status (Проверка статуса ноды)...${NC}"   
     echo "Текущая директория: $(pwd)"
-    # Проверяем, существует ли директория pipe
-    if [ -d "./pipe" ]; then
-        echo "Директория ./pipe найдена."
-        cd ./pipe || { echo -e "${RED}Ошибка перехода в ./pipe${NC}"; return 1; }
+    # Переход в папку pipe
+    if сd pipe; then
+        echo "Перешли в директорию pipe."
+        # Проверка наличия файла pop
         if [ -f "pop" ]; then
             ./pop --status
         else
             echo -e "${RED}Файл pop не найден в директории pipe${NC}"
         fi
+        
+        # Возврат в предыдущую директорию
         cd ..
     else
-        echo -e "${RED}Директория pipe не найдена${NC}"
+        echo -e "${RED}Ошибка перехода в директорию pipe${NC}"
     fi
 }
 
-# Функция для проверки поинтов ноды
+# Функция для проверки поинтов ноды ./pop --points-route
 check_points() {
     echo -e "${BLUE}Checking node points (Проверка поинтов ноды)...${NC}"
-        if [ -d "./pipe" ]; then
-        echo "Директория ./pipe найдена."
-        cd ./pipe || { echo -e "${RED}Ошибка перехода в ./pipe${NC}"; return 1; }
+    echo "Текущая директория: $(pwd)"
+    # Переход в папку pipe
+    if сd pipe; then
+        echo "Перешли в директорию pipe."
+        # Проверка наличия файла pop
         if [ -f "pop" ]; then
             ./pop --points-route
         else
             echo -e "${RED}Файл pop не найден в директории pipe${NC}"
         fi
+        
+        # Возврат в предыдущую директорию
         cd ..
     else
-        echo -e "${RED}Директория pipe не найдена${NC}"
+        echo -e "${RED}Ошибка перехода в директорию pipe${NC}"
     fi
 }
 
