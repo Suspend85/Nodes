@@ -68,5 +68,5 @@ sudo apt clean -y
 # Final message
 print_separator
 echo -e "${GREEN}Server setup completed successfully!${NC}"
-echo -e "${BLUE}Please reboot the server to apply all changes.${NC}"
+# echo -e "${BLUE}Please reboot the server to apply all changes.${NC}"
 print_separator
