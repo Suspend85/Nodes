@@ -1,5 +1,5 @@
 #!/bin/bash
-PROJ_NAME= "PIPE Network POP"
+PROJ_NAME="PIPE Network POP"
 # Проверка наличия необходимых утилит, установка если отсутствуют
 if ! command -v figlet &> /dev/null; then
     sudo apt update && sudo apt install -y figlet
