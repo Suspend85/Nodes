@@ -22,7 +22,7 @@ sleep 1
 
 # функция установки пакетов-зависимостей
 install_dependencies() {
-    echo -e "${GREEN}Installing depencies (Устанавливаем необходимые пакеты)...${NC}"
+    echo -e "${BLUE}Installing depencies (Устанавливаем необходимые пакеты)...${NC}"
     sudo apt update && sudo apt install -y iptables make gcc nano automake autoconf nvme-cli libssl-dev libleveldb-dev tar clang bsdmainutils ncdu
 }
 
@@ -148,10 +148,10 @@ remove_node() {
 # Основное меню
 while true; do
   echo ""
-  echo -e "${YELLOW}"
+  echo -e "${BLUE}"
   echo -e "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
   echo -e "${GREEN} ${PROJ_NAME} - Node Menu (Меню):"
-  echo -e "${YELLOW}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+  echo -e "${BLUE}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
   echo "1. Install Node (Установить ноду)"
   echo "2. Check Node logs (Проверить статус ноды)"
   echo "3. Chech Node points (Проверить поинты ноды)"
