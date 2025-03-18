@@ -38,8 +38,8 @@ cp $HOME/.0gchain/keyring-test/* $HOME/backup-update/keyring-test
 cp $HOME/.0gchain/* $HOME/backup-update
 
 echo ""
-echo -e "\e[1m\e[32m###########################################################################################"
-echo -e "\e[1m\e[32m### Update $PROJ_NAME node... \e[0m" && sleep 1
+echo -e "\e[1m\e[32m========================================================================"
+echo -e "\e[1m\e[32m=== Update $PROJ_NAME node... \e[0m" && sleep 1
 echo ""
 
 # Delete old release
