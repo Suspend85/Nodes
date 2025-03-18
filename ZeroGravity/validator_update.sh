@@ -33,9 +33,9 @@ cd $HOME
 rm -rf $HOME/backup-update
 mkdir -p $HOME/backup-update/config
 mkdir -p $HOME/backup-update/keyring-test
-cp $HOME/.0gchain/config/priv_validator_key.json $HOME/backup-update/config
-cp $HOME/.0gchain/keyring-test/* $HOME/backup-update/keyring-test
-cp $HOME/.0gchain/* $HOME/backup-update
+cp -r $HOME/.0gchain/config/priv_validator_key.json $HOME/backup-update/config
+cp -r $HOME/.0gchain/keyring-test/* $HOME/backup-update/keyring-test
+cp -r $HOME/.0gchain/* $HOME/backup-update
 
 echo ""
 echo -e "\e[1m\e[32m========================================================================"
