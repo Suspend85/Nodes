@@ -47,8 +47,8 @@ rm -f 0gchaind-linux-v*
 
 # Get new release
 wget https://github.com/0glabs/0g-chain/releases/download/v0.5.1/0gchaind-linux-v0.5.1
-sudo chmod +x ./0gchaind-linux-v0.5.0
-sudo mv ./0gchaind-linux-v0.5.0 $(which 0gchaind)
+sudo chmod +x ./0gchaind-linux-v0.5.1
+sudo mv ./0gchaind-linux-v0.5.1 $(which 0gchaind)
 
 #check Version
 0gchaind version
