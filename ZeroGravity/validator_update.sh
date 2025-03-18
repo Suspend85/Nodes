@@ -20,32 +20,38 @@ echo -e "${YELLOW}$(figlet -l -k -w 150 -f slant "BlockRockNodes" | while IFS= r
 echo ""
 sleep 1
 
+echo ''
+echo -e "\e[1m\e[32m========================================================================"
+echo -e "\e[1m\e[32m=== Backup $PROJ_NAME node configuration files... \e[0m" && sleep 1
+echo ''
+
 # Останавливаем сервис ноды для безопасного обновления
-sudo systemctl stop 0gd
+sudo systemctl stop ogd
 
-# Переходим в домашнюю директорию пользователя
+# Backup your priv_validator_key.json file
 cd $HOME
+rm -rf $HOME/backup-update
+mkdir -p $HOME/backup-update/config
+mkdir -p $HOME/backup-update/keyring-test
+cp $HOME/.0gchain/config/priv_validator_key.json $HOME/backup-update/config
+cp $HOME/.0gchain/keyring-test/* $HOME/backup-update/keyring-test
+cp $HOME/.0gchain/* $HOME/backup-update
 
-# Клонируем репозиторий с исходным кодом 0g-chain с GitHub
-git clone https://github.com/0glabs/0g-chain.git
+echo ""
+echo -e "\e[1m\e[32m###########################################################################################"
+echo -e "\e[1m\e[32m### Update $PROJ_NAME node... \e[0m" && sleep 1
+echo ""
 
-# Переходим в директорию с клонированным репозиторием
-cd 0g-chain
+# Delete old release
+rm -f 0gchaind-linux-v*
 
-# Переключаемся на конкретный коммит (или ветку) для обновления ноды
-git checkout 351c2cb
+# Get new release
+wget https://github.com/0glabs/0g-chain/releases/download/v0.5.1/0gchaind-linux-v0.5.1
+sudo chmod +x ./0gchaind-linux-v0.5.0
+sudo mv ./0gchaind-linux-v0.5.0 $(which 0gchaind)
 
-# Компилируем и устанавливаем ноду (сборка бинарного файла)
-make install
-
-# Перемещаем скомпилированный бинарный файл в системную директорию для глобального доступа
-sudo mv $HOME/go/bin/0gchaind /usr/local/bin/0gchaind
-
-# Переходим в директорию, где находится бинарник для проверки версии
-cd $HOME/go/bin
-
-# Проверяем версию установленного бинарного файла, чтобы убедиться в успешном обновлении
+#check Version
 0gchaind version
 
-# Перезапускаем сервис ноды, чтобы применить обновления
-sudo systemctl restart 0gd
+#Restart node
+sudo systemctl restart ogd
