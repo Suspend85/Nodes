@@ -11,6 +11,7 @@ CYAN="\e[36m"
 BLUE="\e[34m"
 GREEN="\e[32m"
 MAGENTA='\033[1;35m'
+PURPLE='\033[0;35m'
 RED="\e[31m"
 PINK="\e[35m"
 NC="\e[0m"
@@ -70,7 +71,7 @@ sleep 1
             cd
             
             # --- 4. Скачивание файла hyper_bot.py ---
-            BOT_URL="https://raw.githubusercontent.com/noxuspace/cryptofortochka/main/hyperbolic/hyper_bot.py"
+            BOT_URL="https://raw.githubusercontent.com/Suspend85/Nodes/refs/heads/master/Hyperbolic/hyper_bot.py"
             curl -fsSL -o hyperbolic/hyper_bot.py "$BOT_URL"
 
             # --- 5. Запрос API-ключа и его замена в hyper_bot.py ---
@@ -81,7 +82,7 @@ sleep 1
             sed -i "s/HYPERBOLIC_API_KEY = \"\$API_KEY\"/HYPERBOLIC_API_KEY = \"$USER_API_KEY\"/" "$PROJECT_DIR/hyper_bot.py"
             
             # --- 6. Скачивание файла questions.txt ---
-            QUESTIONS_URL="https://raw.githubusercontent.com/noxuspace/cryptofortochka/main/hyperbolic/questions.txt"
+            QUESTIONS_URL="https://raw.githubusercontent.com/Suspend85/Nodes/refs/heads/master/Hyperbolic/questions.txt"
             curl -fsSL -o hyperbolic/questions.txt "$QUESTIONS_URL"
 
             # --- 7. Создание systemd сервиса ---
@@ -116,8 +117,6 @@ EOT"
             echo -e "${YELLOW}Команда для проверки логов:${NC}"
             echo "sudo journalctl -u hyper-bot.service -f"
             echo -e "${PURPLE}-----------------------------------------------------------------------${NC}"
-            echo -e "${GREEN}CRYPTO FORTOCHKA — вся крипта в одном месте!${NC}"
-            echo -e "${CYAN}Наш Telegram https://t.me/cryptoforto${NC}"
             sleep 2
             sudo journalctl -u hyper-bot.service -f
             ;;
@@ -155,8 +154,6 @@ EOT"
             echo -e "${GREEN}Бот успешно удален!${NC}"
             # Завершающий вывод
             echo -e "${PURPLE}-----------------------------------------------------------------------${NC}"
-            echo -e "${GREEN}CRYPTO FORTOCHKA — вся крипта в одном месте!${NC}"
-            echo -e "${CYAN}Наш Telegram https://t.me/cryptoforto${NC}"
             sleep 1
             ;;
 
