@@ -1,10 +1,5 @@
 #!/bin/bash
 PROJ_NAME="Hyperbolic"
-# Проверка наличия необходимых утилит, установка если отсутствуют
-if ! command -v figlet &> /dev/null; then
-    sudo apt update && sudo apt install -y figlet
-fi
-
 
 # Определяем цвета для удобства
 YELLOW="\e[33m"
@@ -16,11 +11,6 @@ PURPLE='\033[0;35m'
 RED="\e[31m"
 PINK="\e[35m"
 NC="\e[0m"
-
-# Вывод логотипа с помощью figlet
-echo -e "${YELLOW}$(figlet -l -k -w 150 -f slant "BlockRockNodes" | while IFS= read -r line; do echo -e "${YELLOW}$line${NC}"; done)${NC}"
-echo ""
-sleep 1
 
 # Проверка наличия curl и установка, если не установлен
 if ! command -v curl &> /dev/null; then
