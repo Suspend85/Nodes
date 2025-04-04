@@ -5,6 +5,7 @@ if ! command -v figlet &> /dev/null; then
     sudo apt update && sudo apt install -y figlet
 fi
 
+
 # Определяем цвета для удобства
 YELLOW="\e[33m"
 CYAN="\e[36m"
